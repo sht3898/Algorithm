@@ -20,7 +20,6 @@ def bfs(x, y):
             if 0 <= nx < N and 0 <= ny < M and arr[nx][ny] == 'L' and not dist[nx][ny]:
                 Q.append((nx, ny))
                 dist[nx][ny] = dist[tmp_x][tmp_y] + 1
-    print(dist)
     return max(sum(dist, [])) - 1
 
 
