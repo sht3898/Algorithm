@@ -29,7 +29,6 @@ N, L, R = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 result = 0
 while True:
-    cnt = 0
     check = 0
     visit = [[0] * N for _ in range(N)]
     for i in range(N):
@@ -37,7 +36,6 @@ while True:
             if not visit[i][j]:
                 Q = deque()
                 tmp = []
-                cnt += 1
                 total = bfs(i, j)
                 if len(tmp) > 1:
                     check = 1
