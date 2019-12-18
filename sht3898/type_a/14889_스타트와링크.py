@@ -27,8 +27,8 @@ def perm(k, n):
     perm(k+1, n)
 
 
-N = int(input())
-arr = [list(map(int, input().split())) for _ in range(N)]
+N = int(input())    # 전체 인원수
+arr = [list(map(int, input().split())) for _ in range(N)]   # 점수 조합
 visit = [0] * 20
 result = 0xffff
 perm(0, 0)

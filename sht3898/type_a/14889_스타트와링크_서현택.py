@@ -1,13 +1,13 @@
 import sys
 sys.stdin = open('14889_input.txt', 'r')
 
+
 def solve(k, s):
     global result
     if k == L:
         return
     else:
-        
-
+        pass
 
 
 N = int(input())

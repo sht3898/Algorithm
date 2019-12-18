@@ -15,7 +15,7 @@ def solve(k, s):
                 link += arr[x[i]][x[j]] + arr[x[j]][x[i]]
         result = min(result, abs(start - link))
     else:
-        for i in range(s, N + k - n + 1):
+        for i in range(s, N):
             visit[k] = i
             solve(k+1, i+1)
 

@@ -46,6 +46,6 @@ for i in range(N):
             virus_zone.append((i, j))
         backup[i][j] = arr[i][j]    # arr 값 옮기기
 result = 0      # 결과를 저장
-combi = [0] * 3 #
+combi = [0] * 3 # 벽의 좌표 저장할 곳
 solve(0, 0)
 print(result)
