@@ -3,27 +3,32 @@ import sys
 sys.stdin = open('9663_input.txt', 'r')
 
 
-def promising(i):
-    for j in range(0, i):
-        # 새로운 퀸과 기존의 퀸이 같은 행에 있거나 대각선에 있을 경우
-        if row[j] == row[i] or abs(row[j] - row[i]) == (i - j):
+def promising(k):
+    for i in range(k):
+        if row[i] == row[k] or abs(row[i] - row[k]) == abs(i - k):
             return False
     return True
 
 
-def n_queen(i):
+def solve(k):
     global result
-    if i == N:
+    if k == N:
         result += 1
-    else:
-        for j in range(N):
-            row[i] = j
-            if promising(i):
-                n_queen(i + 1)
+        tmp = ' '.join(map(str, arr))
+        ans.append(tmp)
+        return
+    for i in range(N):
+        row[k] = i
+        if promising(k):
+            arr.append(i)
+            solve(k+1)
+            arr.pop()
 
 
 N = int(input())
-row = [0] * N
+row = [0] * N   # 행
+arr = []
+ans = []
 result = 0
-n_queen(0)
+solve(0)
 print(result)
