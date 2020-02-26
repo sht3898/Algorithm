@@ -1,5 +1,4 @@
 def solution(s):
-    answer = ''
     if len(s) % 2 :
         answer =  s[len(s) // 2 ]
     else:

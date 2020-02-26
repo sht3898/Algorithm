@@ -1,9 +1,8 @@
 def solution(arr):
-    answer = ''
-    result = []
+    answer = []
     before = ''
     for i in range(len(arr)):
         if arr[i] != before:
-            result.append(arr[i])
+            answer.append(arr[i])
             before = arr[i]
-    return result
+    return answer
