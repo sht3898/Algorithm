@@ -1,35 +1,30 @@
-import sys
-sys.stdin = open('1861_input.txt', 'r')
-sys.setrecursionlimit(10000)
+def MyCalc(y):
+    global sub_result, result
 
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
+    if sub_result <= result:
+        return
+
+    if y == N:
+        result = sub_result
+        return
+
+    for x in range(N):
+        if not visited[x]:
+            if Table[y][x] == 0:
+                continue
+            else:
+                sub_result *= (Table[y][x]/100)
+                visited[x] = True
+                MyCalc(y+1)
+                sub_result /= (Table[y][x]/100)
+                visited[x] = False
 
 
-def dfs(x, y):
-    dist[x][y] = 1
-    for i in range(4):
-        nx, ny = x + dx[i], y + dy[i]
-        if 0 <= nx < N and 0 <= ny < N and board[nx][ny] - board[x][y] == 1:
-            if dist[nx][ny] == 0:
-                dfs(nx, ny)
-            dist[x][y] = max(dist[x][y], dist[nx][ny] + 1)
-
-
-for TC in range(1, int(input())+1):
+TC = int(input())
+for tc in range(1, TC+1):
     N = int(input())
-    result = -1e9
-    room = 1e9
-    board = [list(map(int, input().split())) for _ in range(N)]
-    dist = [[0] * N for _ in range(N)]
-    for i in range(N):
-        for j in range(N):
-            if dist[i][j] == 0:
-                dfs(i, j)
-
-    for i in range(N):
-        for j in range(N):
-            if result <= dist[i][j]:
-                result = dist[i][j]
-                room = min(room, board[i][j])
-    print('#{} {} {}'.format(TC, room, result))
+    Table = [list(map(int, input().split())) for _ in range(N)]
+    visited = [0] * N
+    sub_result, result = 1, 0
+    MyCalc(0)
+    print('#%d %0.6f'%(tc, round(result*100, 6)))
