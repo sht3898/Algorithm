@@ -186,3 +186,77 @@
   * 출력 fotmat: {number: round}
   * number에서는 format 함수 안의 값 중 몇 번째 값을 순서대로 넣을 것인지 결정
   * round에서는 .6f 와 같은 형태로 변수를 소수점 6자리까지 float 형태로 표현하겠다는 의미를 나타냄
+
+
+
+## [3752_가능한시험점수](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWHPkqBqAEsDFAUn)
+
+* 풀이
+
+  ```python
+  def solve(k, s):
+      if k == N:
+          result.add(s)
+          return
+      if visit[k][s]:
+          return
+      else:
+          visit[k][s] = 1
+          solve(k+1, s+arr[k])
+          solve(k+1, s)
+  
+  
+  for TC in range(1, int(input())+1):
+      N = int(input())
+      arr = list(map(int, input().split()))
+      visit = [[0] * 10000 for _ in range(N)]
+      result = set()
+      solve(0, 0)
+      print('#{0} {1}'.format(TC, len(result)))
+  ```
+
+  * 처음에는 visit 을 통해 arr 요소들의 방문 여부를 따져서 풀었는데 시간 초과 오류 뜸
+  * visit에 각 단계에서 10000까지의 숫자 중 해당하는 것을 통과했나 저장해서 풀었더니 통과
+  * 그래도 시간이 오래걸림
+
+* 무연이형 풀이
+
+  ```python
+  for TC in range(1, int(input())+1):
+      N = int(input())
+      arr = list(map(int, input().split()))
+      result = set({0})
+      for i in range(N):
+          tmp = set()
+          for n in result:
+              tmp.add(n+arr[i])
+          result = result | tmp
+      print('#{0} {1}'.format(TC, len(result)))
+  ```
+
+  * set에 미리 0을 저장해둔 뒤에 간단한 반복문을 통해 값을 저장함
+  * result = result | tmp은 합집합을 찾기 위한 구문
+  * result와 tmp를 중복 제외하고 합치는 문법
+
+* 진희 누나 풀이
+
+  ```python
+  for TC in range(1, int(input())+1):
+      N = int(input())
+      arr = list(map(int, input().split()))
+      result = set({0})
+      for i in arr:
+          tmp = set()
+          for n in result:
+              tmp.add(n+i)
+          result = result.union(tmp)
+      print('#{} {}'.format(TC, len(result)))
+  
+  ```
+
+  * 무연이형 풀이와 거의 유사하지만 합집합(|) 문법 대신 union을 통해 두 집합자료형을 합침
+
+* [집합자료형 참고링크](https://wikidocs.net/1015#_3)
+
+
+
