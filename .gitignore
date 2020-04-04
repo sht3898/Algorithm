@@ -206,6 +206,7 @@ ENV/
 env.bak/
 venv.bak/
 pip-selfcheck.json
+venv
 
 ### VisualStudioCode ###
 .vscode/*
