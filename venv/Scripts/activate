@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\sehyu\Desktop\program\Algorithm\venv"
+VIRTUAL_ENV="C:\Users\multicampus\Desktop\sht3898\Algorithm\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
