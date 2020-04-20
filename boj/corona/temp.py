@@ -1,39 +1,43 @@
 import sys
-sys.stdin = open('2636_input.txt', 'r')
+sys.stdin = open('14503_input.txt', 'r')
 from collections import deque
 
+# 서, 남, 동, 북
+dx = [0, 1, 0, -1]
+dy = [-1, 0, 1, 0]
+direction = [0, 3, 2, 1]
+back = [2, 1, 0, 3]
 
-def search(x, y):
-    empty.append((x, y))
-    Q.append((x, y))
+
+def solve(x, y, d):
+    Q = deque()
+    visit[x][y] = 1
+    cnt = 1
+    Q.append((x, y, d))
     while Q:
-        x, y = Q.popleft()
-        empty_visit[x][y] = 1
-        for dx, dy in (0, 1), (1, 0), (-1, 0), (0, -1):
-            nx, ny = x + dx, y + dy
-            if 0 <= nx < N and 0 <= ny < M and not empty_visit[nx][ny] and not board[nx][ny]:
-                empty.append((nx, ny))
-                empty_visit[nx][ny] = 1
-                Q.append((nx, ny))
+        x, y, d = Q.popleft()
+        flag = 0
+        for i in range(4):
+            nd = direction[d]
+            nx, ny = x + dx[nd], y + dy[nd]
+            if 0 <= nx < N and 0 <= ny < M and not visit[nx][ny] and not board[nx][ny]:
+                visit[nx][ny] = 1
+                cnt += 1
+                Q.append((nx, ny, nd))
+                flag = 1
+                break
+
+        if not flag:
+            nd = back[d]
+            nx, ny = x + dx[nd], y + dy[nd]
+            if 0 <= nx < N and 0 <= ny < M and not board[nx][ny]:
+                Q.append((nx, ny, d))
+    return cnt
 
 
 N, M = map(int, input().split())
+start_x, start_y, start_d = list(map(int, input().split()))
 board = [list(map(int, input().split())) for _ in range(N)]
-Q = deque()
-empty = []
-cheese = deque()
-empty_visit = [[0] * M for _ in range(N)]
-search(0, 0)
-cnt = 0
-for i in range(N):
-    for j in range(M):
-        if (i, j) not in empty:
-            cheese.append((i, j))
-while cheese:
-    x, y = cheese.popleft()
-    for dx, dy in (0, 1), (1, 0), (0, -1), (-1, 0):
-        nx, ny = x + dx, y+ dy
-        if 0 <= nx < N and 0 <= ny < M and not board[nx][ny]:
-            break
-    else:
-        cheese.append((x, y))
+visit = [[0] * M for _ in range(N)]
+result = solve(start_x, start_y, start_d)
+print(result)
