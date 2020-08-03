@@ -3,13 +3,14 @@ sys.stdin = open('1931_input.txt', 'r')
 
 
 def solve(arr):
-    cnt = 0
-    start = 0
-    for meeting in arr:
-        if meeting[0] >= start:
-            start = meeting[1]
-            cnt += 1
-    return cnt
+    meeting_count = 0
+    start_time = 0
+
+    for time in arr:
+        if time[0] >= start_time:
+            start_time = time[1]
+            meeting_count += 1
+    return meeting_count
 
 
 N = int(input())
