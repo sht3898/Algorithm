@@ -1,8 +1,7 @@
 def solution(priorities, location):
     answer = 0
     N = len(priorities)
-    print(N)
-    
+    print(priorities)
     return
 
 
