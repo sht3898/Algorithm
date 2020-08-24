@@ -1,22 +1,14 @@
 def solution(N, stages):
-    answer = []
-    number = len(stages)
-    result = [0] * (N + 2)
-    failure = []
-
-    for stage in stages:
-        result[stage] += 1
-
-    result = result[1:]
-    temp = number
-
-    for idx in range(len(result) - 1):
-        if temp != 0:
-            failure.append(result[idx] / temp)
-            print("{}/{}".format(result[idx], temp))
-            temp = temp - result[idx]
-
-    return answer
+    result = {}
+    denominator = len(stages)
+    for stage in range(1, N+1):
+        if denominator != 0:
+            count = stages.count(stage)
+            result[stage] = count / denominator
+            denominator -= count
+        else:
+            result[stage] = 0
+    return sorted(result, key=lambda x : result[x], reverse=True)
 
 
 if __name__ == '__main__':
