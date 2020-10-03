@@ -1,25 +1,20 @@
-def solution(prior, location):
+from collections import deque
+
+
+def solution(pri, location):
     answer = 0
-    idx = 0
-    prior_list = []
-    result = []
-    for i in range(len(prior)):
-        prior_list.append([i, prior[i]])
+    Q = deque()
+    for i in range(len(pri)):
+        Q.append((pri[i], i))
 
-    while len(prior_list):
-        p = prior_list[idx][1]
-        for q in prior_list:
-            if idx == q[0]:
-                continue
-            if p < q[1]:
-                prior_list.append(prior_list.pop(idx))
-                break
+    while len(Q):
+        item = Q.popleft()
+        if Q and max(Q)[0] > item[0]:
+            Q.append(item)
         else:
-            result.append(prior_list.pop(idx))
-
-    for r in range(len(result)):
-        if location == result[r][0]:
-            answer = r+1
+            answer += 1
+            if item[1] == location:
+                break
     return answer
 
 
