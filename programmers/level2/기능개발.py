@@ -1,29 +1,40 @@
+import math
+
+
 def solution(progresses, speeds):
     answer = []
-    while sum(answer) < len(progresses):
-        temp = 0
-        check = 0
-        for i in range(len(progresses)):
+    progresses = [math.ceil((100-a)/b) for a, b in zip(progresses, speeds)]
+    front = 0
+    for idx in range(len(progresses)):
+        if progresses[front] < progresses[idx]:
+            answer.append(idx-front)
+            front = idx
+    answer.append(len(progresses)-front)
+    return answer
 
-            if progresses[i] >= 100:
-                if i == 0:
-                    temp += 1
-                else:
-                    for j in range(i):
-                        if progresses[j] < 100:
-                            check = 1
-                            break
-            if check:
+
+def solution2(progresses, speeds):
+    answer = []
+    days = 1
+    count = 0
+    for i in range(len(progresses)):
+
+        if i == 0 and progresses[i]+speeds[i]*days >= 100:
+            count += 1
+            answer.append(count)
+        elif i > 0 and progresses[i]+speeds[i]*days >= 100:
+            count += 1
+            answer[-1] += 1
+        while progresses[i]+speeds[i]*days < 100:
+            days += 1
+            if progresses[i]+speeds[i]*days >= 100:
+                count = 1
+                answer.append(count)
                 break
 
-        for i in range(len(progresses)):
-            if progresses[i] < 100:
-                progresses[i] += speeds[i]
-        if temp != 0:
-            answer.append(temp)
     return answer
 
 
 if __name__ == '__main__':
-    # print(solution([93, 30, 55], [1, 30, 5]	))  # [2, 1]
-    print(solution([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1]	))  # [1, 3, 2]
+    print(solution([93, 30, 55], [1, 30, 5]	))  # [2, 1]
+    print(solution2([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1]	))  # [1, 3, 2]

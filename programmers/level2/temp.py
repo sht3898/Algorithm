@@ -1,28 +1,29 @@
-def solution(prior, location):
-    answer = 0
-    idx = 0
-    prior_list = []
-    result = []
-    for i in range(len(prior)):
-        prior_list.append([i, prior[i]])
+def solution(progresses, speeds):
+    answer = []
+    while sum(answer) < len(progresses):
+        temp = 0
+        check = 0
+        for i in range(len(progresses)):
 
-    while len(prior_list):
-        p = prior_list[idx][1]
-        for q in prior_list:
-            if idx == q[0]:
-                continue
-            if p < q[1]:
-                prior_list.append(prior_list.pop(idx))
+            if progresses[i] >= 100:
+                if i == 0:
+                    temp += 1
+                else:
+                    for j in range(i):
+                        if progresses[j] < 100:
+                            check = 1
+                            break
+            if check:
                 break
-        else:
-            result.append(prior_list.pop(idx))
 
-    for r in range(len(result)):
-        if location == result[r][0]:
-            answer = r+1
+        for i in range(len(progresses)):
+            if progresses[i] < 100:
+                progresses[i] += speeds[i]
+        if temp != 0:
+            answer.append(temp)
     return answer
 
 
 if __name__ == '__main__':
-    print(solution([2, 1, 3, 2], 2))
-    print(solution([1, 1, 9, 1, 1, 1], 0))
+    # print(solution([93, 30, 55], [1, 30, 5]	))  # [2, 1]
+    print(solution([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1]	))  # [1, 3, 2]
