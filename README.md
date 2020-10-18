@@ -34,4 +34,18 @@
   [0, 1, 4, 9, 16]
   ```
 
+
+
+
+## enumerate
+
+> 인덱스와 원소 값을 동시에 반환
+
+* 예시
+
+  ```python
+  for idx, num in enumerate(numbers):
+      print(idx, num)
+  ```
+
   

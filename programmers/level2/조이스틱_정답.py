@@ -54,10 +54,10 @@ def solution2(name):
         # 4. 3이 만족하지 않을 때, left, right를 1로 만듭니다.
         left, right = (1, 1)
 
-        # 5. m[where-left] <= 0일 때까지, left를 1씩 증가시킵니다.
+        # 5. m[where-left] <= 0일 때(현재 위치부터 왼쪽에 A가 나오는데)까지, left를 1씩 증가시킵니다.
         while m[where - left] <= 0:
             left += 1
-        # 6. m[where+right] <= 0일 때까지 right를 1씩 증가시킵니다.
+        # 6. m[where+right] <= 0일 때*현재 위치부터 오른쪽에 A가 나오는데)까지 right를 1씩 증가시킵니다.
         while m[where + right] <= 0:
             right += 1
 
@@ -68,3 +68,8 @@ def solution2(name):
         where += -left if left < right else right
 
     return answer
+
+
+if __name__ == '__main__':
+    print(solution2("JEROEN"))   # 56
+    print(solution2("JAZ"))  # 23
