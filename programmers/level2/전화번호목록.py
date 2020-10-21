@@ -28,7 +28,18 @@ def solution2(phone_book):
     return answer
 
 
+def solution3(phone_book):
+    # phone_book.sort(key=lambda x:len(x))
+    phone_book.sort(key=len)
+    for i in range(len(phone_book)):
+        for j in range(i+1, len(phone_book)):
+            l = len(phone_book[i])
+            if phone_book[i] == phone_book[j][:l]:
+                return False
+    return True
+
+
 if __name__ == '__main__':
-    print(solution2(['119', '97674223', '1195524421']))  # False
-    print(solution2(['123','456','789']))   # Ture
-    print(solution2(['12','123','1235','567','88']))    # False
+    print(solution3(['119', '97674223', '1195524421']))  # False
+    print(solution3(['123','456','789']))   # Ture
+    print(solution3(['12','123','1235','567','88']))    # False

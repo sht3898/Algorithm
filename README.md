@@ -470,3 +470,18 @@ f 문자열에서 `{ }` 문자를 표시하려면 다음과 같이 두 개를 �
 ```
 
 지금까지는 문자열을 가지고 할 수 있는 기본적인 것에 대해 알아보았다. 이제부터는 문자열을 좀 더 자유자재로 다루기 위해 공부해야 할 것을 설명할 것이다. 지쳤다면 잠시 책을 접고 휴식을 취하자.
+
+
+
+
+
+## 정렬
+
+```python
+phone_book.sort(key=lambda x:len(x))
+phone_book.sort(key=len)
+sorted_phone_book = sorted(phone_book, key=lambda x:len(x))
+sorted_phone_book = sorted(phone_book, key=len)
+```
+
+이런 식으로 sort나 sorted 안에 key 함수를 사용한다면 자신이 원하는 조건에 맞게 정렬할 수 있음
