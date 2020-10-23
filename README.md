@@ -1,6 +1,15 @@
 # 알고리즘 문제
 
-## 중요 함수
+* [프로그래머스 문제 정리](./Programmers)
+* [백준 문제 정리](./BOJ)
+* [나동빈 강의](./nadongbin)
+* [Java 문제 풀이](./Java)
+* [SSAFY에서 풀었던 문제 정리](./SSAFY)
+* [기타 문제 정리](./ETC)
+
+
+
+# 주요 개념 정리
 
 ## lambda
 
@@ -115,6 +124,111 @@ min heap 내의 모든 원소(k)는 항상 자식 원소들(2k+1, 2k+2) 보다 �
   
   [1, 3, 5, 4, 8, 7]
   ```
+
+
+
+## 정렬
+
+```python
+phone_book.sort(key=lambda x:len(x))
+phone_book.sort(key=len)
+sorted_phone_book = sorted(phone_book, key=lambda x:len(x))
+sorted_phone_book = sorted(phone_book, key=len)
+```
+
+이런 식으로 sort나 sorted 안에 key 함수를 사용한다면 자신이 원하는 조건에 맞게 정렬할 수 있음
+
+
+
+## nonlocal vs global
+
+다음과 같이 안쪽 함수 B에서 바깥쪽 함수 A의 지역 변수 x를 변경해봅니다.
+
+```python
+def A():
+    x = 10        # A의 지역 변수 x
+    def B():
+        x = 20    # x에 20 할당
+ 
+    B()
+    print(x)      # A의 지역 변수 x 출력
+ 
+A()
+```
+
+실행 결과
+
+```python
+10
+```
+
+실행을 해보면 20이 나와야 할 것 같은데 10이 나왔습니다. 왜냐하면 겉으로 보기에는 바깥쪽 함수 A의 지역 변수 x를 변경하는 것 같지만, 실제로는 안쪽 함수 B에서 이름이 같은 지역 변수 x를 새로 만들게 됩니다. 즉, 파이썬에서는 함수에서 변수를 만들면 항상 현재 함수의 지역 변수가 됩니다.
+
+```python
+def A():
+    x = 10        # A의 지역 변수 x
+    def B():
+        x = 20    # B의 지역 변수 x를 새로 만듦
+```
+
+현재 함수의 바깥쪽에 있는 지역 변수의 값을 변경하려면 nonlocal 키워드를 사용해야 합니다. 다음과 같이 함수 안에서 nonlocal에 지역 변수의 이름을 지정해줍니다.
+
+- **nonlocal** **지역변수**
+
+```python
+def A():
+    x = 10        # A의 지역 변수 x
+    def B():
+        nonlocal x    # 현재 함수의 바깥쪽에 있는 지역 변수 사용
+        x = 20        # A의 지역 변수 x에 20 할당
+ 
+    B()
+    print(x)      # A의 지역 변수 x 출력
+ 
+A()
+```
+
+실행 결과
+
+```python
+20
+```
+
+이제 함수 B에서 함수 A의 지역 변수 x를 변경할 수 있습니다. 즉, nonlocal은 현재 함수의 지역 변수가 아니라는 뜻이며 바깥쪽 함수의 지역 변수를 사용합니다.
+
+### nonlocal이 변수를 찾는 순서
+
+nonlocal은 현재 함수의 바깥쪽에 있는 지역 변수를 찾을 때 가장 가까운 함수부터 먼저 찾음
+
+```
+def A():
+    x = 10
+    y = 100
+    def B():
+        x = 20
+        def C():
+            nonlocal x
+            nonlocal y
+            x = x + 30
+            y = y + 300
+            print(x)
+            print(y)
+        C()
+    B()
+ 
+A()
+```
+
+실행 결과
+
+```
+50
+400
+```
+
+### global
+
+함수가 몇 단계든 상관없이 global 키워드를 사용하면 무조건 전역 변수를 사용
 
 
 
@@ -475,13 +589,3 @@ f 문자열에서 `{ }` 문자를 표시하려면 다음과 같이 두 개를 �
 
 
 
-## 정렬
-
-```python
-phone_book.sort(key=lambda x:len(x))
-phone_book.sort(key=len)
-sorted_phone_book = sorted(phone_book, key=lambda x:len(x))
-sorted_phone_book = sorted(phone_book, key=len)
-```
-
-이런 식으로 sort나 sorted 안에 key 함수를 사용한다면 자신이 원하는 조건에 맞게 정렬할 수 있음
