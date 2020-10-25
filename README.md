@@ -30,7 +30,18 @@
   (lambda x, y: x+y)(10, 20)
   ```
 
+* 활용 예시
 
+  ```python
+  result = list(map(lambda x:x[1]+10, mylist))
+  ```
+
+  ```python
+  plus_ten = lambda x:x+10
+  plus_ten(1)	# 11
+  ```
+  
+  
 
 ## map
 
