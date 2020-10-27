@@ -11,6 +11,66 @@
 
 # 주요 개념 정리
 
+## for문 한 줄로
+
+### 단일 for문
+
+* 기존 코드
+
+  ```python
+  new_words = []
+  
+  for word in words:
+      if len(word) > 3:
+          new_words.append(word)
+  ```
+
+* 한 줄로
+
+  ```python
+  new_words = [word for word in words if len(word) > 3]
+  ```
+
+### 중첩 for문
+
+* 기존 for문
+
+  ```python
+  new_words = []
+  for word_list in words:
+      for word in word_list:
+          if len(word) > 4:
+              new_words.append(word)
+  ```
+
+* 한 줄로
+
+  ```python
+  new_words = [word for word_list in words for word in word_list if len(word) > 4]
+  ```
+
+  바깥 쪽의 for문을 맨 마지막에 작성하고, 내포된 for문을 앞부분에 작성
+
+* if-else 포함
+
+  1) if else가함께 쓰일 경우, if 문을 for 문보다 앞에 적음
+
+  ```python
+  list1 = [1,2,3]
+  
+  [i*j if i > 1 else 0 for j in list1 for i in list1]
+  ```
+
+  2) 만약 else가 없다면, if문은 맨 마지막 위치에 적음
+
+  ```python
+  [i*j for j in list1 for i in list1 if i>1]
+  ```
+
+  
+
+
+
 ## lambda
 
 > lambda 인자: 표현식
@@ -148,6 +208,38 @@ sorted_phone_book = sorted(phone_book, key=len)
 ```
 
 이런 식으로 sort나 sorted 안에 key 함수를 사용한다면 자신이 원하는 조건에 맞게 정렬할 수 있음
+
+
+
+## 동적계획법(Dyanamic Programming)
+
+> 상향식 접근
+>
+> 점화식 찾기가 중요
+>
+> [참고](https://m.blog.naver.com/PostView.nhn?blogId=mlmmm9&logNo=221571344968&proxyReferer=https:%2F%2Fwww.google.com%2F)
+
+### 피보나치 수
+
+> 피보나치를 재귀로 구현하면 엄청나게 많은 중복 호출이 존재하게 되어 비효율적
+
+### 메모이제이션(Memoization)
+
+> 컴퓨터 프로그램 실행 시 이전에 계산한 값을 메모리에 저장해서 매번 다시 계산하지 않도록하여 전체적인 실행속도를 빠르게 하는 기술
+>
+> 메모리제이션이 아님
+
+* 피보나치 수를 구하는 알고리즘
+
+### 동적 계획 알고리즘
+
+* 그리디 알고리즘과 같이 최적화 문제를 해결하는 알고리즘
+* 최적화 문제의 답은 여러 개가 있을 수 있음 - The가 아닌 An
+* 작은 부분 문제들의 답을 구함 => 답을 이용하여 보다 더 크기의 부분 문제를 해결 => 주어진 원래의 문제 해결
+
+### etc
+
+* 분할정복은 하향식인 반면 동적 계획법은 상향식
 
 
 
