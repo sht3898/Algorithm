@@ -67,7 +67,8 @@
   [i*j for j in list1 for i in list1 if i>1]
   ```
 
-  
+
+
 
 ## zip
 
@@ -85,6 +86,16 @@ zip(*iterable)은 동일한 개수로 이루어진 자료형을 묶어 주는 �
 ```
 
 
+
+## 시간 측정
+
+```python
+import timeit
+
+start = timeit.default_timer()
+# 시간 측정할 코드
+print("WorkingTime: {} sec".format(timeit.default_timer()-start))
+```
 
 
 
