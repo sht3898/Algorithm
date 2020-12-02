@@ -99,6 +99,75 @@ print("WorkingTime: {} sec".format(timeit.default_timer()-start))
 
 
 
+## copy(복사)
+
+### 단순 객체복제
+
+```python
+a = [1, 2, 3, 4]
+b = a     # shallow copy
+print(b)    # [1, 2, 3, 4]
+b[2] = 100   # b의 item 변경
+print(b)    # [1, 2, 100, 4]
+print(a)    # [1, 2, 100, 4], a의 item도 수정됨!!
+```
+
+```python
+a = 10
+b = a
+print(b)    # 10 출력력
+b = "abc"
+print(b)    # abc 출력
+print(a)    # 10 출력
+```
+
+
+
+### 얕은 복사(shallow copy)
+
+```python
+import copy
+
+a = [1, [1, 2, 3]]
+b = copy.copy(a)    # shallow copy 발생
+print(b)    # [1, [1, 2, 3]] 출력
+b[0] = 100
+print(b)    # [100, [1, 2, 3]] 출력,
+print(a)    # [1, [1, 2, 3]] 출력, shallow copy 가 발생해 복사된 리스트는 별도의 객체이므로 item을 수정하면 복사본만 수정된다. (immutable 객체의 경우)
+
+c = copy.copy(a)
+c[1].append(4)    # 리스트의 두번째 item(내부리스트)에 4를 추가
+print(c)    # [1, [1, 2, 3, 4]] 출력
+print(a)    # [1, [1, 2, 3, 4]] 출력, a가 c와 똑같이 수정된 이유는 리스트의 item 내부의 객체는 동일한 객체이므로 mutable한 리스트를 수정할때는 둘다 값이 변경됨
+```
+
+
+
+### 깊은 복사(deep copy)
+
+```python
+import copy
+
+a = [1, [1, 2, 3]]
+b = copy.deepcopy(a)    # deep copy 실행
+print(b)    # [1, [1, 2, 3]] 출력
+b[0] = 100
+b[1].append(4)
+print(b)    # [100, [1, 2, 3, 4]] 출력
+print(a)    # [1, [1, 2, 3]] 출력
+```
+
+
+
+### 정리
+
+> 1. 단순복제는 완전히 동일한 객체,
+> 2. 얕은복사(shallow copy)는 복합객체(껍데기)만 복사, 그 내용은 동일한 객체
+> 3. 깊은복사(deep copy)는 복합객체 복사 + 그 내용도 재귀적으로 복사
+
+
+
+
 ## lambda
 
 > lambda 인자: 표현식
