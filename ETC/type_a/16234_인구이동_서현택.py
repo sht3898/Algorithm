@@ -29,7 +29,7 @@ N, L, R = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 result = 0
 while True:
-    check = 0
+    meet = 0
     visit = [[0] * N for _ in range(N)]
     for i in range(N):
         for j in range(N):
@@ -38,12 +38,12 @@ while True:
                 tmp = []
                 total = bfs(i, j)
                 if len(tmp) > 1:
-                    check = 1
+                    meet = 1
                     newVal = total // len(tmp)
                     while tmp:
                         ni, nj = tmp.pop()
                         arr[ni][nj] = newVal
-    if check:
+    if meet:
         result += 1
     else:
         break

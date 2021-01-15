@@ -7,12 +7,12 @@ def solve(k, s):
         return
     for i in range(s, len(S)):
         num = S[i]
-        if not check[i]:
-            check[i] = 1
+        if not meet[i]:
+            meet[i] = 1
             arr.append(num)
             solve(k+1, i)
             arr.pop()
-            check[i] = 0
+            meet[i] = 0
 
 
 while True:
@@ -20,7 +20,7 @@ while True:
     if arr[0] == 0:
         break
     K, S = arr[0], arr[1:]
-    check = [0] * len(S)
+    meet = [0] * len(S)
     arr = []
     solve(0, 0)
     print()

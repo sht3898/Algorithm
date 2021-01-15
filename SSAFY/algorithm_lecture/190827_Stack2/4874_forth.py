@@ -5,7 +5,7 @@ t = int(input())
 for tc in range(1, t+1):
     arr = list(input().split())
     stack = []
-    check = 0
+    meet = 0
     for i in range(len(arr)-1):
         if arr[i].isdigit():
             stack.append(arr[i])
@@ -21,10 +21,10 @@ for tc in range(1, t+1):
                 stack.append(result)
 
             except:
-                check = 'error'
+                meet = 'error'
 
-    if check == 0 and len(stack) == 1:
+    if meet == 0 and len(stack) == 1:
         print('#{} {}'.format(tc, stack.pop()))
 
-    elif check == 'error' or len(stack) > 1:
+    elif meet == 'error' or len(stack) > 1:
         print('#{} error'.format(tc))

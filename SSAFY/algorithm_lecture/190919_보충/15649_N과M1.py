@@ -21,7 +21,7 @@ import sys; sys.stdin = open('15649_input.txt', 'r')
 #
 # perm(0, M)
 n, m = map(int, input().split())
-check = [False]*n
+meet = [False] * n
 a = []
 
 def solve(cnt):
@@ -29,11 +29,11 @@ def solve(cnt):
         print(" ".join(map(str, a)))
         return
     for i in range(n):
-        if not check[i]:
-            check[i] = True
+        if not meet[i]:
+            meet[i] = True
             a.append(i+1)
             solve(cnt+1)
             a.pop()
-            check[i] = False
+            meet[i] = False
 
 solve(0)

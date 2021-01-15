@@ -15,7 +15,7 @@ def check(x, y, k):
             visited[nx][ny] = 1
             total += arr[nx][ny]
             if result >= total:
-                check(nx, ny, k + 1)
+                meet(nx, ny, k + 1)
             total -= arr[nx][ny]
             visited[nx][ny] = 0
 
@@ -26,6 +26,6 @@ for TC in range(1, int(input())+1):
     visited = [[0] * N for _ in range(N)]
     total = arr[0][0]
     result = 0xffffff
-    check(0, 0, 0)
+    meet(0, 0, 0)
     print('#{}'.format(TC), end=' ')
     print(result)

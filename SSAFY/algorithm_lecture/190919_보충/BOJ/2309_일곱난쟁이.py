@@ -3,7 +3,7 @@ import sys; sys.stdin = open('2309_input.txt', 'r')
 man = [0] * 9
 for i in range(9):
     man[i] = int(input())
-check = [0] * 9
+meet = [0] * 9
 arr = []
 final = []
 
@@ -16,12 +16,12 @@ def solve(k):
         return
     for i in range(len(man)):
         m = man[i]
-        if not check[i]:
-            check[i] = 1
+        if not meet[i]:
+            meet[i] = 1
             arr.append(m)
             solve(k+1)
             arr.pop()
-            check[i] = 0
+            meet[i] = 0
 
 
 solve(0)
