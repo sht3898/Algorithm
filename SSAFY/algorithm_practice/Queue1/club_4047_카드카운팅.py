@@ -11,12 +11,12 @@ for TC in range(1, int(input())+1):
     arr = input()
     Q = deque()
     result = [13, 13, 13, 13]
-    check = 0
+    meet = 0
     while arr:
         temp = arr[:3]
         arr = arr[3:]
         if temp in Q:
-            check = 1
+            meet = 1
             break
         Q.append(temp)
 
@@ -32,7 +32,7 @@ for TC in range(1, int(input())+1):
                 result[3] -= 1
 
     print('#{}'.format(TC), end=' ')
-    if check:
+    if meet:
         print('ERROR')
     else:
         print(*result)

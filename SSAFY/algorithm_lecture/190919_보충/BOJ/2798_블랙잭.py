@@ -3,7 +3,7 @@ import sys; sys.stdin = open('2798_input.txt', 'r')
 
 N, M = map(int, input().split())
 cards = list(map(int, input().split()))
-check = [0] * 300000
+meet = [0] * 300000
 now_sum = 0
 max_sum = 0
 
@@ -15,12 +15,12 @@ def solve(k):
             max_sum = now_sum
         return
     for i in cards:
-        if not check[i]:
-            check[i] = 1
+        if not meet[i]:
+            meet[i] = 1
             now_sum += i
             if now_sum <= M:
                 solve(k+1)
-            check[i] = 0
+            meet[i] = 0
             now_sum -= i
 
 

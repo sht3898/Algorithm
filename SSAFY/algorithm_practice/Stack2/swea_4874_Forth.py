@@ -4,7 +4,7 @@ sys.stdin = open('4874_input.txt', 'r')
 for TC in range(1, int(input())+1):
     arr = list(input().split())
     result = []
-    check = 0
+    meet = 0
     for idx in arr:
         if idx not in ['+', '-', '*', '/']:
             result.append(idx)
@@ -22,9 +22,9 @@ for TC in range(1, int(input())+1):
                 else:
                     result.append(first//second)
             except:
-                check = 1
+                meet = 1
     result.pop()
-    if check or len(result) > 1:
+    if meet or len(result) > 1:
         print('#{} {}'.format(TC, 'error'))
     else:
         print('#{} {}'.format(TC, result[0]))
