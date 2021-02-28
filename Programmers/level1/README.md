@@ -1,10 +1,6 @@
-# 프로그래머스
-
 # 레벨1
 
-* 문자열 압축
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/60057)
+## [문자열 압축](https://programmers.co.kr/learn/courses/30/lessons/60057)
 
   * 풀이
 
@@ -37,9 +33,7 @@
 
   
 
-* 완주하지 못한 선수
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/42576)
+## [완주하지 못한 선수](https://programmers.co.kr/learn/courses/30/lessons/42576)
 
   * 풀이
 
@@ -57,9 +51,7 @@
 
     
 
-* 모의고사
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/42840)
+## [모의고사](https://programmers.co.kr/learn/courses/30/lessons/42840)
 
   * 풀이
 
@@ -90,9 +82,7 @@
 
     
 
-* K번째수
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/42748)
+## [K번째수](https://programmers.co.kr/learn/courses/30/lessons/42748)
 
   * 내 풀이
 
@@ -115,9 +105,7 @@
 
     
 
-* 체육복
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/42862)
+## [체육복](https://programmers.co.kr/learn/courses/30/lessons/42862)
 
   * 풀이
 
@@ -139,9 +127,7 @@
 
     
 
-* 2016년
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/12901)
+## [2016년](https://programmers.co.kr/learn/courses/30/lessons/12901)
 
   * 내 풀이
 
@@ -170,9 +156,7 @@
 
     
 
-* 가운데 글자 가져오기
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/12903)
+## [가운데 글자 가져오기](https://programmers.co.kr/learn/courses/30/lessons/12903)
 
   * 풀이
 
@@ -187,9 +171,7 @@
 
     
 
-* 같은 숫자는 싫어
-
-  * [링크](https://programmers.co.kr/learn/courses/30/lessons/12906)
+## [같은 숫자는 싫어](https://programmers.co.kr/learn/courses/30/lessons/12906)
 
   * 풀이
 
@@ -203,6 +185,4 @@
                 before = arr[i]
         return answer
     ```
-
-* 
 
