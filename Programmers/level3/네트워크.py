@@ -1,3 +1,46 @@
+from collections import deque
+
+
+def solution_bfs(n, computers):
+    answer = 0
+    visit = [0] * n
+
+    def bfs(x):
+        Q = deque()
+        Q.append(x)
+        visit[x] = 1
+        while Q:
+            x = Q.popleft()
+            for j in range(n):
+                if x != j and computers[x][j]:
+                    if not visit[j]:
+                        Q.append(j)
+                        visit[j] = 1
+    for i in range(n):
+        if not visit[i]:
+            bfs(i)
+            answer += 1
+    return answer
+
+
+def solution_dfs(n, computers):
+    answer = 0
+    visit = [0] * n
+
+    def dfs(x):
+        visit[x] = 1
+        for j in range(n):
+            if x != j and computers[x][j]:
+                if not visit[j]:
+                    dfs(j)
+
+    for i in range(n):
+        if not visit[i]:
+            dfs(i)
+            answer += 1
+    return answer
+
+
 def solution(n, computers):
     answer = 0
     visit = [0] * n

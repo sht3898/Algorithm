@@ -1,6 +1,6 @@
 # Level3
 
-## [섬 연결하기](https://programmers.co.kr/learn/courses/30/lessons/42861)
+# [섬 연결하기](https://programmers.co.kr/learn/courses/30/lessons/42861)
 
 * 풀이
 
@@ -44,4 +44,79 @@
   * 사이클이 생성되지 않게하는 것이 핵심
   
 * [크루스칼 알고리즘](https://gmlwjd9405.github.io/2018/08/29/algorithm-kruskal-mst.html)
+
+
+
+# [네트워크](https://programmers.co.kr/learn/courses/30/lessons/43162)
+
+* 풀이1(BFS)
+
+  collections 라이브러리에서 deque를 불러옴
+
+  방문했던 컴퓨터를 저장하기 위한 visit 선언
+
+  함수를 만든 뒤 큐를 이용한 bfs 탐색으로 현재 컴퓨터에서 갈 수 있는 모든 지점을 탐색하며 visit 체크
+
+  반복문을 통해 아직 방문하지 않은 컴퓨터에서 갈 수 있는 모든 지점을 체크하며 answer에 1 추가
+
+* 코드1(BFS)
+
+  ```python
+  from collections import deque
+  
+  
+  def solution_bfs(n, computers):
+      answer = 0
+      visit = [0] * n
+  
+      def bfs(x):
+          Q = deque()
+          Q.append(x)
+          visit[x] = 1
+          while Q:
+              x = Q.popleft()
+              for j in range(n):
+                  if x != j and computers[x][j]:
+                      if not visit[j]:
+                          Q.append(j)
+                          visit[j] = 1
+      for i in range(n):
+          if not visit[i]:
+              bfs(i)
+              answer += 1
+      return answer
+  ```
+
+  
+
+* 풀이2(DFS)
+
+  방문했던 컴퓨터를 저장하기 위한 visit 선언
+
+  함수를 만든 뒤 재귀를 통해 방문하지 않은 컴퓨터를 모두 수환하며 visit 체크
+
+  반복문을 통해 아직 방문하지 않은 컴퓨터에서 갈 수 있는 모든 지점을 체크하며 answer에 1 추가
+
+* 코드2(DFS)
+
+  ```python
+  def solution_dfs(n, computers):
+      answer = 0
+      visit = [0] * n
+  
+      def dfs(x):
+          visit[x] = 1
+          for j in range(n):
+              if x != j and computers[x][j]:
+                  if not visit[j]:
+                      dfs(j)
+  
+      for i in range(n):
+          if not visit[i]:
+              dfs(i)
+              answer += 1
+      return answer
+  ```
+
+  
 
