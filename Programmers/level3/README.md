@@ -1,6 +1,6 @@
 # Level3
 
-# [섬 연결하기](https://programmers.co.kr/learn/courses/30/lessons/42861)
+## [섬 연결하기](https://programmers.co.kr/learn/courses/30/lessons/42861)
 
 * 풀이
 
@@ -36,18 +36,16 @@
       return ans
   ```
 
-
-
-* [크루스칼 알고리즘(Kruskal Algorithm) 활용](https://jisun-rea.tistory.com/entry/python-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-Level3-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0-%ED%83%90%EC%9A%95%EB%B2%95)
-* 탐욕법을 이용하여 네트워크 정점을 최소비용으로 연결
-  * 탐욕법이란 그때그때 최선의 선택을 함으로써 최선의 결과에 도달하는 것
-  * 사이클이 생성되지 않게하는 것이 핵심
-  
+* 기타
+  * 탐욕법을 이용하여 네트워크 정점을 최소비용으로 연결
+    * 탐욕법이란 그때그때 최선의 선택을 함으로써 최선의 결과에 도달하는 것
+    * 사이클이 생성되지 않게하는 것이 핵심
+* [참고링크](https://jisun-rea.tistory.com/entry/python-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-Level3-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0-%ED%83%90%EC%9A%95%EB%B2%95)
 * [크루스칼 알고리즘](https://gmlwjd9405.github.io/2018/08/29/algorithm-kruskal-mst.html)
 
 
 
-# [네트워크](https://programmers.co.kr/learn/courses/30/lessons/43162)
+## [네트워크](https://programmers.co.kr/learn/courses/30/lessons/43162)
 
 * 풀이1(BFS)
 
@@ -120,3 +118,76 @@
 
   
 
+## [여행경로](https://programmers.co.kr/learn/courses/30/lessons/43164)
+
+* 풀이
+
+  dict 자료형인 routes를 통해 시작지에서 갈수 있는 여행지들을 추가하고 각 시작지 별로 갈 수 있는 여행지들을 알파벳 순서대로 정렬함
+
+  시작점은 저장할 stack과 경로를 저장할 path를 선언
+
+  시작점이 routes에 없거나 모든 곳을 다 방문한 경우 시작점(top)을 path에 저장
+
+  그것이 아니라면 현재 시작점에서 갈 수 있는 여행지 중 알파벳 순서가 가장 빠른 여행지를 시작점 스택에 추가
+
+  반복문이 끝나면 도착지점부터 저장했으므로 경로를 거꾸로 반환하며 끝냄
+
+* 코드
+
+  ```python
+  def solution(tickets):
+      routes = {}
+      for t in tickets:
+          if t[0] not in routes:
+              routes[t[0]] = [t[1]]
+          else:
+              routes[t[0]].append(t[1])
+              routes[t[0]].sort()
+  
+      stack = ['ICN']
+      path = []
+      while stack:
+          top = stack[-1]
+          if top not in routes or len(routes[top]) == 0:
+              path.append(stack.pop())
+          else:
+              stack.append(routes[top].pop(0))
+  
+      return path[::-1]
+  ```
+
+  
+
+* 기타
+
+  ```python
+  def solution(tickets):
+      answer = []
+      routes = []
+      tickets.sort()
+      for i, icn in enumerate(tickets):
+          if icn[0] == 'ICN':
+              routes.append(tickets.pop(i))
+              break
+      while tickets:
+          for i, city in enumerate(tickets):
+              if routes[-1][1] == city[0]:
+                  routes.append(tickets.pop(i))
+                  break
+      answer = list(map(lambda x:x[0], routes))
+      answer.append(routes[-1][1])
+      return answer
+  ```
+
+  * 처음엔 위와 같은 방식으로 풀었으나
+
+    ```python
+    ticket
+    1. "ICN" -> "AAA"
+    2. "ICN" -> "BBB"
+    3. "BBB" -> "ICN"
+    ```
+
+    이런 상황에서 오류가 발생하기 때문에 수정이 필요했음
+
+* [참고링크](https://programmers.co.kr/learn/courses/30/lessons/43164)

@@ -16,28 +16,26 @@ def solution(tickets):
             tickets.append([a, b])
     return answer
 
+
 # 정답
 def solution2(tickets):
-    routes = dict()
-    for a, b in tickets:
-        if a in routes:
-            routes[a].append(b)
+    routes = {}
+    for t in tickets:
+        if t[0] not in routes:
+            routes[t[0]] = [t[1]]
         else:
-            routes[a] = [b]
+            routes[t[0]].append(t[1])
+            routes[t[0]].sort()
 
-    for r in routes:
-        routes[r].sort(reverse=True)
-
-    st = ["ICN"]
+    stack = ['ICN']
     path = []
-
-    while st:
-        top = st[-1]
+    while stack:
+        top = stack[-1]
         if top not in routes or len(routes[top]) == 0:
-            path.append(st.pop())
+            path.append(stack.pop())
         else:
-            st.append(routes[top][-1])
-            routes[top] = routes[top][:-1]
+            stack.append(routes[top].pop(0))
+
     return path[::-1]
 
 
