@@ -1,14 +1,76 @@
 # 삼성 알고리즘 풀이
 
-## [13460_구슬탈출](https://www.acmicpc.net/problem/13460)
+## [13460_구슬탈출2](https://www.acmicpc.net/problem/13460)
 
-* [풀이](./13460_구슬탈출.py)
+* 풀이
 
   ```python
+  from collections import deque
+  
+
+  dx = [0, 0, 1, -1]
+  dy = [1, -1, 0, 0]
+  
+  
+  def move(x, y, dx, dy):
+      cnt = 0
+      while board[x+dx][y+dy] != '#' and board[x][y] != 'O':
+          x += dx
+          y += dy
+          cnt += 1
+      return x, y, cnt
+  
+  
+  N, M = map(int, input().split())
+  board = [list(input()) for _ in range(N)]
+  visit = [[[[0]*M for _ in range(N)] for _ in range(M)] for _ in range(N)]
+  rx, ry, bx, by = [0] * 4
+  for i in range(N):
+      for j in range(M):
+          if board[i][j] == 'R':
+              rx, ry = i, j
+          elif board[i][j] == 'B':
+              bx, by = i, j
+  Q = deque()
+  Q.append((rx, ry, bx, by, 1))
+  visit[rx][ry][bx][by] = 1
+  
+  check = 0
+  while Q:
+      rx, ry, bx, by, depth = Q.popleft()
+      if depth > 10:
+          break
+      for i in range(4):
+          next_rx, next_ry, r_cnt = move(rx, ry, dx[i], dy[i])
+          next_bx, next_by, b_cnt = move(bx, by, dx[i], dy[i])
+  
+          if board[next_bx][next_by] == 'O':
+              continue
+          if board[next_rx][next_ry] == 'O':
+              print(depth)
+              check = 1
+              break
+          if next_rx == next_bx and next_ry == next_by:
+              if r_cnt > b_cnt:
+                  next_rx -= dx[i]
+                  next_ry -= dy[i]
+              else:
+                  next_bx -= dx[i]
+                  next_by -= dy[i]
+          if not visit[next_rx][next_ry][next_bx][next_by]:
+              visit[next_rx][next_ry][next_bx][next_by] = 1
+              Q.append((next_rx, next_ry, next_bx, next_by, depth+1))
+      if check:
+          break
+  if not check:
+      print(-1)
   
   ```
-
   
+  * 처음 빨간색과 파란색이 놓인 위치에서 4방향으로 기울였을때 갈 수 있는 모든 경로를 계산
+  * 4차원 배열 visit을 통해 빨간색과 파란색이 놓이는 경우를 계산하여 방문하지 않은 경우에만 계산
+  * 횟수가 10번을 초과하거나 파란색이 홀이 빠지는 등의 경우를 고려하여 작성
+  * 성공했다면 가장 적은 횟수로 성공한 경우를, 실패한다면 -1을 반환
 
 ## [12100_2048_easy](https://www.acmicpc.net/problem/12100)
 
