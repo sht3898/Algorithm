@@ -74,23 +74,133 @@
 
 ## [12100_2048_easy](https://www.acmicpc.net/problem/12100)
 
-* [풀이](./12100_2048_easy.py)
+* 풀이
 
   ```python
+  from collections import deque
+  import copy
+
+  N = int(input())
+  board = [list(map(int, input().split())) for _ in range(N)]
+  answer = 0
+  Q = deque()
+  
+  
+  def get(i, j):
+      if board[i][j]:
+          Q.append(board[i][j])
+          board[i][j] = 0
+  
+  
+  def merge(i, j, di, dj):
+      while Q:
+          x = Q.popleft()
+          if not board[i][j]:
+              board[i][j] = x
+          elif board[i][j] == x:
+              board[i][j] = x*2
+              i, j = i+di, j+dj
+          else:
+              i, j = i+di, j+dj
+              board[i][j] = x
+  
+  
+  def move(k):
+      if k == 0:
+          for j in range(N):
+              for i in range(N):
+                  get(i, j)
+              merge(0, j, 1, 0)
+      elif k == 1:
+          for j in range(N):
+              for i in range(N-1, -1, -1):
+                  get(i, j)
+              merge(N-1, j, -1, 0)
+      elif k == 2:
+          for i in range(N):
+              for j in range(N):
+                  get(i, j)
+              merge(i, 0, 0, 1)
+      else:
+          for i in range(N):
+              for j in range(N-1, -1, -1):
+                  get(i, j)
+              merge(i, N-1, 0, -1)
+  
+  
+  def solve(cnt):
+      global board, answer
+      if cnt == 5:
+          for i in range(N):
+              answer = max(answer, max(board[i]))
+          return
+      b = copy.deepcopy(board)
+  
+      for k in range(4):
+          move(k)
+          solve(cnt+1)
+          board = copy.deepcopy(b)
+  
+  
+  solve(0)
+  print(answer)
   
   ```
-
   
+  * 많이 어려웠던 문제라 다시 한 번 점검이 필요
+
+
 
 ## [3190_뱀](https://www.acmicpc.net/problem/3190)
 
-* [풀이](./3190_뱀.py)
+* 풀이
 
   ```python
-  
-  ```
+  dx = [0, 1, 0, -1]
+  dy = [1, 0, -1, 0]
 
+  N = int(input())
+  K = int(input())
+  apple = [list(map(int, input().split())) for _ in range(K)]
+  L = int(input())
+  rotate = dict()
+  for _ in range(L):
+      k, v = input().split()
+      rotate[int(k)] = v
+  board = [[0]*N for _ in range(N)]
+  for i, j in apple:
+      board[i-1][j-1] = 1
+  x, y, d, time = 0, 0, 0, 0
+  snake = [[x, y]]
+  while snake:
+      time += 1
+      nx, ny = x+dx[d], y+dy[d]
+      if 0 <= nx < N and 0 <= ny < N:
+          if [nx, ny] in snake:
+              break
   
+          if board[nx][ny] == 0:
+              snake.pop(0)
+              snake.append([nx, ny])
+          elif board[nx][ny] == 1:
+              snake.append([nx, ny])
+              board[nx][ny] = 0
+      else:
+          break
+  
+      if time in rotate:
+          if rotate[time] == 'L':
+              d = (d-1) % 4
+          elif rotate[time] == 'D':
+              d = (d+1) % 4
+      x, y = nx, ny
+  print(time)
+  ```
+  
+  * 뱀의 위치를 저장한 뒤 조건을 확인하면서 반복함
+  * 시간을 확인하며 방향을 바꿔줌
+
+
 
 ## [13458_시험감독](https://www.acmicpc.net/problem/13458)
 
