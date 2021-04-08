@@ -1,4 +1,4 @@
-import sys; sys.stdin = open('14501_input.txt', 'r')
+# import sys; sys.stdin = open('14501_input.txt', 'r')
 
 N = int(input())
 T, P = [0]*N, [0]*N

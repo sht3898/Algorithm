@@ -354,3 +354,28 @@
                     check = 0
     print(answer)
     ```
+
+
+
+## [14501_퇴사](https://www.acmicpc.net/problem/14501)
+
+* 풀이
+
+  ```python
+  N = int(input())
+  T, P = [0]*N, [0]*N
+  for i in range(N):
+      T[i], P[i] = map(int, input().split())
+  dp = [0] * 20
+  for i in range(N):
+      if dp[i] > dp[i+1]:
+          dp[i+1] = dp[i]
+      if dp[i+T[i]] < dp[i] + P[i]:
+          dp[i+T[i]] = dp[i] + P[i]
+  print(dp[N])
+  
+  ```
+
+  * dp 활용 문제
+  * 다음 날보다 현재 날짜의 금액이 더 크다면 다음 날 dp에 현재 날짜의 dp 금액을 저장
+  * 현재 날짜부터 필요한 상담 기간이 자난 후의 금액이 현재 날짜에 벌 수 있는 금액보다 적다면 상담 기간이 지난 후의 금액을 현재 날짜에 벌 수 있는 금액으로 바꿈
