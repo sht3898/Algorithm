@@ -379,3 +379,73 @@
   * dp 활용 문제
   * 다음 날보다 현재 날짜의 금액이 더 크다면 다음 날 dp에 현재 날짜의 dp 금액을 저장
   * 현재 날짜부터 필요한 상담 기간이 자난 후의 금액이 현재 날짜에 벌 수 있는 금액보다 적다면 상담 기간이 지난 후의 금액을 현재 날짜에 벌 수 있는 금액으로 바꿈
+
+
+
+## [14502_연구소](https://www.acmicpc.net/problem/14502)
+
+* 풀이
+
+  ```python
+  from collections import deque
+  import copy
+  
+  N, M = map(int, sys.stdin.readline().split())
+  board = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+  answer = 0
+  virus = []
+  dx = [0, 1, 0, -1]
+  dy = [1, 0, -1, 0]
+  for i in range(N):
+      for j in range(M):
+          if board[i][j] == 2:
+              virus.append((i, j))
+  
+  
+  def move(k):
+      global answer
+      if k == 3:
+          Q = deque()
+          new_board = copy.deepcopy(board)
+          # for i in range(N):
+          #     for j in range(M):
+          #         if new_board[i][j] == 2:
+          #             Q.append((i, j))
+          for i in range(len(virus)):
+              Q.append(virus[i])
+          while Q:
+              x, y = Q.popleft()
+              for i in range(4):
+                  nx, ny = x + dx[i], y+dy[i]
+                  if 0 <= nx < N and 0 <= ny < M:
+                      if new_board[nx][ny] == 0:
+                          new_board[nx][ny] = 2
+                          Q.append((nx, ny))
+          cnt = 0
+          for i in range(N):
+              for j in range(M):
+                  if new_board[i][j] == 0:
+                      cnt += 1
+          answer = max(answer, cnt)
+          return
+  
+      for i in range(N):
+          for j in range(M):
+              if board[i][j] == 0:
+                  board[i][j] = 1
+                  move(k+1)
+                  board[i][j] = 0
+  
+  
+  move(0)
+  print(answer)
+  
+  ```
+
+  * 조합 + bfs/dfs 문제
+  * 벽돌 위치 3개를 k를 사용한 조합으로 탐색
+  * k가 3일 때 벽돌 위치를 파악하여 바이러스가 어디까지 퍼졌나 bfs/dfs를 활용해 탐색하고 안전 영역의 개수를 비교하여 answer에 저장
+  * 처음엔 주석되어있는 부분처럼 모든 영역을 탐색하며 바이러스 영역(2)을 찾아냈는데, 미리 virus의 위치를 저장하여 반복했을때 시간이 더 줄었음
+  * 이 문제를 풀이하면서 `input()` 보다는 `sys.stdin.readline()`이 시간효율면에서 더 좋다는 것을 알아냄
+  * pypy로 하면 풀리나 python으로 제출하면 시간 초과가 떳음
+  * [다른 분의 풀이](https://mentha2.tistory.com/24)를 보니 모든 영역을 탐색할 때 M과 N을 각각 탐색하여 이중 반복문을 만들지 않고 M*N을 곱한뒤 계산을 했을때 python으로도 통과했는데 반복문을 줄임으로써 시간효율을 개선한 것이라 생각됨
