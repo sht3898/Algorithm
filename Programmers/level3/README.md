@@ -6,6 +6,7 @@
 
   * 비용을 오름차순으로 정렬하여 최소 비용이 먼저 오게함
 * costs의 첫번째 원소를 routes에 넣어서 첫 경로로 설정
+  
   * 모든 섬이 경로에 들어올때까지(`len(routes) == n`) 원소들을 반복하면서 경로를 탐색
 * 만약 시작점과 도착점이 이미 경로에 있다면 넘어감
   * 둘중 한점만 경로에 있다면 새로운 섬을 경로에 추가하고(set자료형이기 때문에 중복된 섬은 추가되지 않음) ans에 현재 섬의 비용을 추가한다. 또한, 현재 섬의 경로를 [-1, -1, -1]로 설정하여 다음 반복에 사용되지 않게 함
@@ -47,6 +48,7 @@
 
   * collections 라이브러리에서 deque를 불러옴
 * 방문했던 컴퓨터를 저장하기 위한 visit 선언
+  
   * 함수를 만든 뒤 큐를 이용한 bfs 탐색으로 현재 컴퓨터에서 갈 수 있는 모든 지점을 탐색하며 visit 체크
 * 반복문을 통해 아직 방문하지 않은 컴퓨터에서 갈 수 있는 모든 지점을 체크하며 answer에 1 추가
   
@@ -84,8 +86,9 @@
 
   * 방문했던 컴퓨터를 저장하기 위한 visit 선언
 * 함수를 만든 뒤 재귀를 통해 방문하지 않은 컴퓨터를 모두 수환하며 visit 체크
-  * 반복문을 통해 아직 방문하지 않은 컴퓨터에서 갈 수 있는 모든 지점을 체크하며 answer에 1 추가
-
+  
+* 반복문을 통해 아직 방문하지 않은 컴퓨터에서 갈 수 있는 모든 지점을 체크하며 answer에 1 추가
+  
 * 코드2(DFS)
 
   ```python
@@ -115,10 +118,12 @@
 
   * dict 자료형인 routes를 통해 시작지에서 갈수 있는 여행지들을 추가하고 각 시작지 별로 갈 수 있는 여행지들을 알파벳 순서대로 정렬함
 * 시작점은 저장할 stack과 경로를 저장할 path를 선언
+  
   * 시작점이 routes에 없거나 모든 곳을 다 방문한 경우 시작점(top)을 path에 저장
 * 그것이 아니라면 현재 시작점에서 갈 수 있는 여행지 중 알파벳 순서가 가장 빠른 여행지를 시작점 스택에 추가
-  * 반복문이 끝나면 도착지점부터 저장했으므로 경로를 거꾸로 반환하며 끝냄
-
+  
+* 반복문이 끝나면 도착지점부터 저장했으므로 경로를 거꾸로 반환하며 끝냄
+  
 * 코드
 
   ```python
@@ -230,4 +235,92 @@
   ```
 
 * [참고링크](https://wwlee94.github.io/category/algorithm/greedy/speed-enforcement-camera/)
+
+
+
+## [베스트앨범](https://programmers.co.kr/learn/courses/30/lessons/42579?language=python3)
+
+* 풀이
+
+  ```python
+  def solution(genres, plays):
+      answer = []
+      music = {}
+      music_cnt = {}
+      for i in range(len(genres)):
+          if genres[i] not in music:
+              music[genres[i]] = [[i, plays[i]]]
+              music_cnt[genres[i]] = plays[i]
+          else:
+              music[genres[i]].append([i, plays[i]])
+              music_cnt[genres[i]] += plays[i]
+  
+      for k, v in music.items():
+          v.sort(key=lambda x: (-x[1], x[0]))
+      music_cnt = sorted(music_cnt.items(), key=lambda x: -x[1])
+  
+      for key, value in music_cnt:
+          if len(music[key]) >= 2:
+              answer.extend(list(map(lambda x: x[0], music[key][:2])))
+          else:
+              answer.append(music[key][0][0])
+      return answer
+  ```
+
+  * 장르별로 음악의 정보를 담을 딕셔너리 music과 장르별 재생 수를 담을 딕셔너러 music_cnt 선언
+  * 장르와 재생 수 리스트의 길이만큼 반복하면서 music과 music_cnt에 정보 저장
+  * music에 저장된 장르별 정보를 재생수 기준 내림차순 와 인덱스 기준 오름차순으로 정렬
+  * music_cnt를 장르별 재생수 내림차순 정보가 저장된 리스트 자료형으로 바꿔서 저장
+  * 장르에 포함된 노래가 2곡 이상인 장르는 answer에 상위 두 개의 데이터만 저장하고, 한 곡만 있는 장르는 한개만 저장
+
+* 매직코드를 사용한 다른 풀이
+
+  ```python
+  def solution(genres, plays):
+      answer = []
+      dic = {}
+      album_list = []
+      for i in range(len(genres)):
+          dic[genres[i]] = dic.get(genres[i], 0) + plays[i]
+          album_list.append(album(genres[i], plays[i], i))
+  
+      dic = sorted(dic.items(), key=lambda dic:dic[1], reverse=True)
+      album_list = sorted(album_list, reverse=True)
+  
+      print(album_list)
+  
+      while len(dic) > 0:
+          play_genre = dic.pop(0)
+          print(play_genre)
+          cnt = 0;
+          for ab in album_list:
+              if play_genre[0] == ab.genre:
+                  answer.append(ab.track)
+                  cnt += 1
+              if cnt == 2:
+                  break
+  
+      return answer
+  
+  class album:
+      def __init__(self, genre, play, track):
+          self.genre = genre
+          self.play = play
+          self.track = track
+  
+      def __lt__(self, other):
+          return self.play < other.play
+      def __le__(self, other):
+          return self.play <= other.play
+      def __gt__(self, other):
+          return self.play > other.play
+      def __ge__(self, other):
+          return self.play >= other.play
+      def __eq__(self, other):
+          return self.play == other.play
+      def __ne__(self, other):
+          return self.play != other.play
+  ```
+
+  * 아직 매직코드는 익숙하지 않은데 공부를 더 하면 좋을 것 같다
 
