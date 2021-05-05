@@ -324,3 +324,42 @@
 
   * 아직 매직코드는 익숙하지 않은데 공부를 더 하면 좋을 것 같다
 
+
+
+
+
+## [가장 먼 노드]()
+
+
+
+## [입국심사]()
+
+* 풀이
+
+  ```python
+  def solution(n, times):
+      answer = 0
+      left = 1
+      right = max(times) * n
+      while left < right:
+          mid = (left+right)//2
+          temp = 0
+          
+          for time in times:
+              temp += mid//time
+          
+          if temp >= n:
+              right = mid
+          else:
+              left = mid+1
+      answer = left
+      return answer
+  ```
+
+  * 이분탐색을 이용한 풀이
+  * 시간의 최소값(1)과 최대값(심사가 가장 오래 걸리는 심사관이 모든 사람을 심사할 경우)을 각각 left, right에 저장
+  * left가 right보다 작을 동안 반복하며 값을 찾음
+  * 임의의 시간(여기서는 mid)를 설정한 뒤, 해당 시간 동안 각 심사관이 몇 명을 심사할 수 있나 temp에 저장
+  * temp에 저장된 값이 n보다 크거나 같다면 right를 mid로 바꿔 탐색 범위를 축소
+  * temp에 저장된 값이 n보다 작으면 left를 mid+1로 바꿔 탐색 범위를 축소
+  * 반복이 끝난뒤(left=right) answer에 left나 right를 저장하여 마지막 최적 값을 반환
