@@ -19,3 +19,7 @@
 ## [단기간 성장](./단기간성장)
 
 * [단기간 성장](https://www.acmicpc.net/workbook/view/4349) 문제집 문제 풀이
+
+## [이분탐색](./이분탐색)
+
+* [이분탐색](https://www.acmicpc.net/step/29) 문제 풀이

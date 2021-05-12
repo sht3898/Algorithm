@@ -40,7 +40,9 @@
   	return None
   ```
 
-  
+* 문제에서 주어진 수의 범위가 매우 크다 생각하면 대부분 이분(이진)탐색으로 풀이하는 경우가 많음
+
+
 
 ## [수 찾기](https://www.acmicpc.net/problem/1920)
 
@@ -187,3 +189,40 @@
 
   * 여기서도 for문과 if 문을 써서 numbers를 작성할 때보다 한 줄로 작성했을때가 미세하게 나마 속도가 빨랐다
 
+
+
+## [공유기 설치](https://www.acmicpc.net/problem/2110)
+
+* 풀이
+
+  ```python
+  import sys; sys.stdin = open('2110_input.txt', 'r')
+  
+  
+  N, C = map(int, input().split())
+  board = list(int(input()) for _ in range(N))
+  board.sort()
+  start, end = 1, board[-1]-board[0]
+  result = 0
+  while start <= end:
+      mid = (start + end) // 2
+      old = board[0]
+      count = 1
+  
+      for i in range(1, N):
+          if board[i] - old >= mid:
+              count += 1
+              old = board[i]
+      if count >= C:
+          start = mid + 1
+      else:
+          end = mid-1
+  print(end)
+  
+  ```
+
+  * 집을 정렬해서 최소 거리와 최대 거리를 계산하고 이들의 중간값을 계산
+  * 중간값을 기준으로 집의 개수를 셌을 때, C보다 크다면, start를 mid+1로 갱신하고, C보다 작다면, end를 mid-1로 갱신
+  * start와 end가 같아질 때까지 반복
+
+* [참고링크](https://assaeunji.github.io/python/2020-05-07-bj2110/)
