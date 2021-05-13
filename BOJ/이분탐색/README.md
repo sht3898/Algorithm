@@ -226,3 +226,39 @@
   * start와 end가 같아질 때까지 반복
 
 * [참고링크](https://assaeunji.github.io/python/2020-05-07-bj2110/)
+
+
+
+## [K번째수](https://www.acmicpc.net/problem/1300)
+
+* 풀이
+
+  ```python
+  import sys; sys.stdin = open('1300_input.txt', 'r')
+  
+  N = int(input())
+  k = int(input())
+  start, end = 1, k
+  while start <= end:
+      mid = (start + end) // 2
+  
+      temp = 0
+      for i in range(1, N+1):
+          temp += min(mid//i, N)
+  
+      if temp < k:
+          start = mid + 1
+      else:
+          end = mid - 1
+  print(start)
+  
+  ```
+
+  * 처음에는 단순히 이중 반복문을 통해 배열을 생성하고 sort를 이용해 정렬한다음 k번째 수를 출력하게 하였는데 시간 초과가 발생하여 수정이 필요하게 되었다
+  * 감이 오지 않아 구글 검색[(출처)](https://claude-u.tistory.com/449)을 통해 풀이를 하였다
+  * 이분탐색으로 어떤 수보다 작은 자연수의 곱(i*j)이 몇 개인지 알아낼 수 있음
+  * 예를 들어 10*10에서 20보다 작은 수를 생각해보면
+  * 1\*1\~1\*10 부터 2\*1~2\*10, 3\*1 ~ 3\*6, ..., 10\*1 ~ 10\*2
+  * 이는 20을 행으로 나눈 몫과 N=10 중의 최소값
+  * 따라서 이분탐색을 통해 해당 숫자(mid)보다 작거나 같은 숫자들을 전부 찾아줌으로써 mid가 몇번째에 위치한 숫자인지 알아 낼 수 있다
+
