@@ -76,58 +76,6 @@
 
 
 
-## [나무 자르기](https://www.acmicpc.net/problem/2805)
-
-* Python3, Pypy3 모두 통과 풀이
-
-  ```python
-  import sys
-  sys.stdin = open('2805_input.txt', 'r')
-  
-  N, M = map(int, input().split())
-  board = list(map(int, input().split()))
-  start = 1
-  end = max(board)
-  while start <= end:
-      mid = (start + end)//2
-      total = sum(b-mid for b in board if b > mid)
-      if total >= M:
-          start = mid + 1
-      else:
-          end = mid - 1
-  print(end)
-  
-  ```
-
-  * 범위를 탐색하며 자른 나무의 길이의 합이 M보다 크면 탐색 시작 범위를 mid+1로 옮기고 작거나 같으면 탐색 종료 범위를 mid-1로 옮겨서 계속 탐색
-  * total 부분을 구할 때 한번에 구하니 해결이 되었다
-
-* Pypy3만 통과 풀이
-
-  ```python
-  import sys
-  sys.stdin = open('2805_input.txt', 'r')
-  
-  N, M = map(int, input().split())
-  board = list(map(int, input().split()))
-  start = 1
-  end = max(board)
-  while start <= end:
-      mid = (start + end)//2
-      total = 0
-      for b in board:
-          if b-mid > 0:
-              total += b-mid
-      if total >= M:
-          start = mid + 1
-      else:
-          end = mid - 1
-  print(end)
-  
-  ```
-
-  
-
 ## [숫자카드2](https://www.acmicpc.net/problem/10816)
 
 * 딕셔너리 활용 풀이
@@ -188,6 +136,87 @@
   ```
 
   * 여기서도 for문과 if 문을 써서 numbers를 작성할 때보다 한 줄로 작성했을때가 미세하게 나마 속도가 빨랐다
+
+
+
+## [랜선 자르기](https://www.acmicpc.net/problem/1654)
+
+* 풀이
+
+  ```python
+  import sys
+  sys.stdin = open('2805_input.txt', 'r')
+  
+  N, M = map(int, input().split())
+  board = list(map(int, input().split()))
+  start = 1
+  end = max(board)
+  while start <= end:
+      mid = (start + end)//2
+      total = sum(b-mid for b in board if b > mid)
+      if total >= M:
+          start = mid + 1
+      else:
+          end = mid - 1
+  print(end)
+  
+  ```
+
+  *  b보다 mid가 클때만 조건을 설정하여 이분탐색
+
+
+
+## [나무 자르기](https://www.acmicpc.net/problem/2805)
+
+* Python3, Pypy3 모두 통과 풀이
+
+  ```python
+  import sys
+  sys.stdin = open('2805_input.txt', 'r')
+  
+  N, M = map(int, input().split())
+  board = list(map(int, input().split()))
+  start = 1
+  end = max(board)
+  while start <= end:
+      mid = (start + end)//2
+      total = sum(b-mid for b in board if b > mid)
+      if total >= M:
+          start = mid + 1
+      else:
+          end = mid - 1
+  print(end)
+  
+  ```
+
+  * 범위를 탐색하며 자른 나무의 길이의 합이 M보다 크면 탐색 시작 범위를 mid+1로 옮기고 작거나 같으면 탐색 종료 범위를 mid-1로 옮겨서 계속 탐색
+  * total 부분을 구할 때 한번에 구하니 해결이 되었다
+
+* Pypy3만 통과 풀이
+
+  ```python
+  import sys
+  sys.stdin = open('2805_input.txt', 'r')
+  
+  N, M = map(int, input().split())
+  board = list(map(int, input().split()))
+  start = 1
+  end = max(board)
+  while start <= end:
+      mid = (start + end)//2
+      total = 0
+      for b in board:
+          if b-mid > 0:
+              total += b-mid
+      if total >= M:
+          start = mid + 1
+      else:
+          end = mid - 1
+  print(end)
+  
+  ```
+
+  
 
 
 
@@ -261,4 +290,37 @@
   * 1\*1\~1\*10 부터 2\*1~2\*10, 3\*1 ~ 3\*6, ..., 10\*1 ~ 10\*2
   * 이는 20을 행으로 나눈 몫과 N=10 중의 최소값
   * 따라서 이분탐색을 통해 해당 숫자(mid)보다 작거나 같은 숫자들을 전부 찾아줌으로써 mid가 몇번째에 위치한 숫자인지 알아 낼 수 있다
+
+
+
+## [가장 긴 증가하는 부분 수열2](https://www.acmicpc.net/problem/12015)
+
+* 풀이
+
+  ```python
+  import sys; sys.stdin = open('12015_input.txt', 'r')
+  import bisect
+  
+  N = int(input())
+  arr = list(map(int, input().split()))
+  
+  dp = [arr[0]]
+  
+  for i in range(N):
+      if arr[i] > dp[-1]:
+          dp.append(arr[i])
+      else:
+          idx = bisect.bisect_left(dp, arr[i])
+          dp[idx] = arr[i]
+  
+  print(len(dp))
+  
+  ```
+
+  * 혼자서는 감이 안와 구글에서 검색하여 참조([링크](https://seohyun0120.tistory.com/entry/%EA%B0%80%EC%9E%A5-%EA%B8%B4-%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94-%EB%B6%80%EB%B6%84-%EC%88%98%EC%97%B4LIS-%EC%99%84%EC%A0%84-%EC%A0%95%EB%B3%B5-%EB%B0%B1%EC%A4%80-%ED%8C%8C%EC%9D%B4%EC%8D%AC))
+  * dp를 arr[0]으로 초기화
+  * 현재 위치(i)가 이전 위치의 원소들보다 크면 dp에 추가
+  * 현재 위치(i)가 이전 위치의 원소보다 작거나 같으면, bisect.bisect_left로 이전 위치의 원소 중 가장 큰 원소의 index값을 구하고 dp의 index원소를 arr[i]로 바꿔줌
+  * bisect.bisect_left(arr, x): arr가 정렬되어있다는 가정하에 x값이 들어갈 위치 반환
+  * N개의 수들에 대해 이진 탐색을 진행하므로 O(logN)의 시간 복잡도를 가지게 됨
 
