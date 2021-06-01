@@ -78,3 +78,62 @@
 
   * 최대힙 문제와 반대로 heapq 배열에 원래의 숫자를 입력하여 가장 작은 숫자대로 출력할 수 있도록 만듦
 
+
+
+## [절댓값 힙](https://www.acmicpc.net/problem/11286)
+
+* 풀이
+
+  ```python
+  import sys; sys.stdin = open('11286_input.txt', 'r')
+  import heapq
+  
+  N = int(sys.stdin.readline())
+  arr = []
+  for _ in range(N):
+      num = int(sys.stdin.readline())
+      if num != 0:
+          heapq.heappush(arr, [abs(num), num])
+      else:
+          if arr:
+              print(heapq.heappop(arr)[1])
+          else:
+              print(0)
+  
+  ```
+
+  * 위의 문제들과 유사하게 절대값을 첫번째 원소로 넣어 작은 순서대로 arr 리스트에 저장되게 만들어서 풀이
+
+
+
+## [가운데를 말해요](https://www.acmicpc.net/problem/1655)
+
+* 풀이
+
+  ```python
+  import sys; sys.stdin = open('1655_input.txt', 'r')
+  import heapq, sys
+  
+  N = int(sys.stdin.readline())
+  left, right = [], []
+  for _ in range(N):
+      num = int(sys.stdin.readline())
+      if len(left) == len(right):
+          heapq.heappush(left, [-num, num])
+      else:
+          heapq.heappush(right, [num, num])
+  
+      if left and right and left[0][1] > right[0][1]:
+          left_value = heapq.heappop(left)[1]
+          right_value = heapq.heappop(right)[1]
+          heapq.heappush(right, [left_value, left_value])
+          heapq.heappush(left, [-right_value, right_value])
+  
+      print(left[0][1])
+  
+  ```
+
+  * 중간값을 기준으로 작은 값과 큰 값을 저장하기 위한  리스트인 left, right 선언
+  * 만약 두 리스트의 길이가 같다면 left에 먼저 넣게 하고(작은 값을 먼저 출력하라는 조건), 그렇지 않다면 right에 삽입
+  * left에는 -를 붙여서 큰 값이 먼저 오게하고 right에는 그대로 저장해서 작은 값이 먼저 오게하여 왼쪽의 가장 큰 값과 오른쪽의 가장 작은 값을 비교할 수 있게 함
+  * 두 배열이 모두 존재했을때, 왼쪽의 최대값이 오른쪽의 최소값보다 크다면 두 위치를 바꾸어 중간값을 조정하며 답을 구함
