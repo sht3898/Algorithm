@@ -1,10 +1,9 @@
 import sys; sys.stdin = open('15686_input.txt', 'r')
+from itertools import combinations
 
 
 N, M = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(N)]
-answer = int(1e9)
-check = [0] * M
 house = []
 store = []
 for i in range(N):
@@ -14,8 +13,15 @@ for i in range(N):
         elif board[i][j] == 2:
             store.append([i, j])
 
-dist = [[0]*len(store) for _ in range(len(house))]
-for i in range(len(house)):
-    for j in range(len(store)):
-        dist[i][j] = abs(house[i][0]-store[j][0]) + abs(house[i][1] - store[j][1])
-print(dist)
+pick_store = list(combinations(store, M))
+result = [0] * len(pick_store)
+
+for h in house:
+    for j in range(len(pick_store)):
+        MIN = int(1e9)
+        for k in pick_store[j]:
+            temp = abs(h[0]-k[0]) + abs(h[1]-k[1])
+            MIN = min(MIN, temp)
+        result[j] += MIN
+
+print(min(result))
