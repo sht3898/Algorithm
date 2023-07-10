@@ -1,4 +1,4 @@
-# import sys; sys.stdin = open('3190_input.txt', 'r')
+import sys; sys.stdin = open('3190_input.txt', 'r')
 
 dx = [0, 1, 0, -1]
 dy = [1, 0, -1, 0]
